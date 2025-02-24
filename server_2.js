@@ -57,14 +57,19 @@ app.get("/send_payment", (req, res) => {
 
   const success = req.query.success;
 
+  
+
   if (success) {
     console.log(`✅ Received Payment Success`);
+
+    console.log(`Received success param: ${success}, Type: ${typeof success}`);
+
 
     // If CMD ID is "1"
     // Chips  -----  waiting to change ......
     if (success === "1") {
       console.log("Sending success to WebSocket clients...");
-      io.emit("cart_update", { productId: 1, quantity: 1 });
+      io.emit("payment", { success:1 });
     }
 
     res.status(200).send(`Payment received and processed.`);
