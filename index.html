@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Messaging Client</title>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Simple Messaging Client</h1>
+
+  <input type="text" id="messageInput" placeholder="Type your message" />
+  <button onclick="sendMessage()">Send</button>
+
+  <h2>Messages:</h2>
+  <ul id="messages"></ul>
+
+  <script>
+    // Connect to the WebSocket server
+    const socket = io("http://localhost:5001");
+
+    // Send a message
+    function sendMessage() {
+      const message = document.getElementById("messageInput").value;
+      if (message.trim()) {
+        socket.emit("send_message", { message });
+        addMessage(`You: ${message}`);
+      }
+      document.getElementById("messageInput").value = "";
+    }
+
+    // Listen for incoming messages
+    socket.on("receive_message", (data) => {
+      addMessage(`Other: ${data.message}`);
+    });
+
+    // Display messages
+    function addMessage(msg) {
+      const li = document.createElement("li");
+      li.textContent = msg;
+      document.getElementById("messages").appendChild(li);
+    }
+  </script>
+</body>
+</html>
