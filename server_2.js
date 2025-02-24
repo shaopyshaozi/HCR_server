@@ -30,9 +30,10 @@ app.get("/send_cmd", (req, res) => {
     console.log(`✅ Received CMD ID from ESP32: ${cmdID}`);
 
     // If CMD ID is "1", emit update_coke to connected WebSocket clients
+    // Coke
     if (cmdID === "2") {
       console.log("Sending update_coke to WebSocket clients...");
-      io.emit("cart_update", { productId: 3, quantity: 1 });
+      io.emit("cart_update", { productId: 2, quantity: 1 });
     }
 
     res.status(200).send(`CMD ID ${cmdID} received and processed.`);
@@ -41,6 +42,9 @@ app.get("/send_cmd", (req, res) => {
     res.status(400).send("No cmd_id provided.");
   }
 });
+
+
+
 
 // WebSocket Connection
 io.on("connection", (socket) => {
