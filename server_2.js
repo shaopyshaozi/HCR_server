@@ -31,8 +31,8 @@ app.get("/send_cmd", (req, res) => {
 
     // If CMD ID is "1", emit update_coke to connected WebSocket clients
     if (cmdID === "1") {
-      console.log("🚀 Sending update_coke to WebSocket clients...");
-      io.emit("update_coke", { productId: 3, quantity: 1 });
+      console.log("Sending update_coke to WebSocket clients...");
+      io.emit("cart_update", { productId: 3, quantity: 1 });
     }
 
     res.status(200).send(`CMD ID ${cmdID} received and processed.`);
