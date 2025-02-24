@@ -62,12 +62,9 @@ app.get("/send_payment", (req, res) => {
   if (success) {
     console.log(`✅ Received Payment Success`);
 
-    console.log(`Received success param: ${success}, Type: ${typeof success}`);
-
-
     // If CMD ID is "1"
     // Chips  -----  waiting to change ......
-    if (success === "1") {
+    if (success == "1") {
       console.log("Sending success to WebSocket clients...");
       io.emit("payment", { success:1 });
     }
