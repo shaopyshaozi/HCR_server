@@ -49,6 +49,32 @@ app.get("/send_cmd", (req, res) => {
   }
 });
 
+// ✅ New Route to Handle GET Requests from ESP32
+app.get("/send_payment", (req, res) => {
+  console.log("Received a request from payment");
+
+  console.log(req)
+
+  const success = req.query.success;
+
+  if (success) {
+    console.log(`✅ Received Payment Success`);
+
+    // If CMD ID is "1"
+    // Chips  -----  waiting to change ......
+    if (success === "1") {
+      console.log("Sending success to WebSocket clients...");
+      io.emit("cart_update", { productId: 1, quantity: 1 });
+    }
+
+    res.status(200).send(`Payment received and processed.`);
+  } else {
+    console.log("⚠️ No cmd_id received in query.");
+    res.status(400).send("No cmd_id provided.");
+  }
+});
+
+
 
 
 
