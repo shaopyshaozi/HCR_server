@@ -53,7 +53,7 @@ app.get("/send_cmd", (req, res) => {
 app.get("/send_payment", (req, res) => {
   console.log("Received a request from payment");
 
-  console.log(req)
+  //console.log(req)
 
   const success = req.query.success;
 
