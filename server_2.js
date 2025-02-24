@@ -61,13 +61,10 @@ app.get("/send_payment", (req, res) => {
 
   if (success) {
     console.log(`✅ Received Payment Success`);
-
-    // If CMD ID is "1"
-    // Chips  -----  waiting to change ......
-    if (success == "1") {
-      console.log("Sending success to WebSocket clients...");
-      io.emit("payment", { success:1 });
-    }
+   
+    console.log("Sending success to WebSocket clients...");
+    io.emit("payment", { success:1 });
+  
 
     res.status(200).send(`Payment received and processed.`);
   } else {
