@@ -31,13 +31,10 @@ app.get("/send_cmd", (req, res) => {
   
       switch (cmdID) {
         case "5":
-          console.log("Sending update_chips to WebSocket clients...");
-          io.emit("cart_update", { productId: 1, quantity: 1 });
-          break;
-  
         case "6":
-          console.log("Sending update_coke to WebSocket clients...");
-          io.emit("cart_update", { productId: 2, quantity: 1 });
+        case "7":
+          console.log("Sending update_biscuit to WebSocket clients...");
+          io.emit("cart_update", { productId: 1, quantity: 1 });
           break;
   
         case "22":
@@ -46,8 +43,8 @@ app.get("/send_cmd", (req, res) => {
           return;  // Ensure no further processing happens after sending response
   
         default:
-          console.log("⚠️ Unrecognized CMD ID.");
-          res.status(400).send("Invalid CMD ID.");
+          //console.log("⚠️ Unrecognized CMD ID.");
+          //res.status(400).send("Invalid CMD ID.");
           return;
       }
   
