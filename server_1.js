@@ -42,7 +42,7 @@ app.get("/send_cmd", (req, res) => {
   
         case "7":
           console.log("✅ CMD ID 7 received. Sending response 0 to ESP32...");
-          res.status(200).send("0");  // Send back "0" immediately
+          res.status(200).send("2");  // Send back "0" immediately
           return;  // Ensure no further processing happens after sending response
   
         default:
