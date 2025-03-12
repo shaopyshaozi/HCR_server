@@ -30,9 +30,8 @@ app.get("/send_cmd", (req, res) => {
       console.log(`✅ Received CMD ID from ESP32: ${cmdID}`);
   
       switch (cmdID) {
-        case "5":
-        case "6":
         case "7":
+        case "8":
           console.log("Sending update_biscuit to WebSocket clients...");
           io.emit("cart_update", { productId: 1, quantity: 1 });
           break;
