@@ -40,7 +40,7 @@ app.get("/send_cmd", (req, res) => {
           io.emit("cart_update", { productId: 2, quantity: 1 });
           break;
   
-        case "7":
+        case "2":
           console.log("✅ CMD ID 7 received. Sending response 0 to ESP32...");
           res.status(200).send("2");  // Send back "0" immediately
           return;  // Ensure no further processing happens after sending response
