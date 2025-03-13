@@ -87,8 +87,8 @@ app.get("/confirm_purchase", (req, res) => {
 
   if (quantity) {
     lastPurchasedQuantity = parseInt(quantity, 10);
-    console.log(`✅ Stored Purchased Quantity: ${lastPurchasedQuantity}`);
-    res.status(200).send(`Purchase confirmed. Quantity: ${lastPurchasedQuantity}`);
+    console.log(`✅ Stored Quantity: ${lastPurchasedQuantity}`);
+    res.status(200).send(`Quantity Received: ${lastPurchasedQuantity}`);
   } else {
     res.status(400).send("No quantity provided.");
   }
