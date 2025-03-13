@@ -92,29 +92,30 @@ app.get("/send_payment", (req, res) => {
   }
 });
 
-// ✅ Replace with ESP32's fixed local IP
-const ESP32_IP = "http://192.168.43.100";  // This is the static IP you set on ESP32
 
-// ✅ Route to Receive Purchased Quantity from Website
-app.get("/confirm_purchase", async (req, res) => {
+let lastPurchasedQuantity = 0;  // Store the latest quantity
+
+// ✅ Save the purchased quantity
+app.get("/confirm_purchase", (req, res) => {
   const quantity = req.query.quantity;
 
   if (quantity) {
-    console.log(`✅ Received Purchased Quantity: ${quantity}`);
-
-    try {
-      // ✅ Immediately send the quantity to ESP32
-      const espResponse = await axios.get(`${ESP32_IP}/receive_quantity?quantity=${quantity}`);
-      console.log(`✅ Sent to ESP32. ESP32 Response: ${espResponse.data}`);
-    } catch (error) {
-      console.error("⚠️ Error sending quantity to ESP32:", error.message);
-    }
-
-    res.status(200).send(`Purchase confirmed. Quantity: ${quantity}`);
+    lastPurchasedQuantity = parseInt(quantity, 10);
+    console.log(`✅ Stored Purchased Quantity: ${lastPurchasedQuantity}`);
+    res.status(200).send(`Purchase confirmed. Quantity: ${lastPurchasedQuantity}`);
   } else {
-    console.log("⚠️ No quantity received.");
     res.status(400).send("No quantity provided.");
   }
+});
+
+// ✅ ESP32 fetches the latest quantity
+app.get("/get_quantity", (req, res) => {
+  console.log(`📡 ESP32 requested quantity. Sending: ${lastPurchasedQuantity}`);
+  res.status(200).send(`${lastPurchasedQuantity}`);  // Send as plain text
+});
+
+app.listen(port, () => {
+  console.log(`🚀 AWS Server running on port ${port}`);
 });
 
 
