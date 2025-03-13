@@ -101,6 +101,9 @@ app.get("/get_quantity", (req, res) => {
     res.status(200).send(`${lastPurchasedQuantity}`);
     lastPurchasedQuantity = 0
   }
+  else{
+    res.status(200).send(`${lastPurchasedQuantity}`);
+  }
 });
 
 
