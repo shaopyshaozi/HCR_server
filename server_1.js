@@ -96,8 +96,11 @@ app.get("/confirm_purchase", (req, res) => {
 
 // ✅ ESP32 fetches the latest quantity
 app.get("/get_quantity", (req, res) => {
-  console.log(`📡 ESP32 requested quantity. Sending: ${lastPurchasedQuantity}`);
-  res.status(200).send(`${lastPurchasedQuantity}`);  // Send as plain text
+  if (lastPurchasedQuantity!=0){
+    console.log(`📡 ESP32 requested quantity. Sending: ${lastPurchasedQuantity}`);
+    res.status(200).send(`${lastPurchasedQuantity}`);
+    lastPurchasedQuantity = 0
+  }
 });
 
 
