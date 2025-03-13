@@ -114,10 +114,6 @@ app.get("/get_quantity", (req, res) => {
   res.status(200).send(`${lastPurchasedQuantity}`);  // Send as plain text
 });
 
-app.listen(port, () => {
-  console.log(`🚀 AWS Server running on port ${port}`);
-});
-
 
 // WebSocket Connection
 io.on("connection", (socket) => {
