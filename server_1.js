@@ -54,20 +54,6 @@ app.get("/send_cmd", (req, res) => {
       res.status(400).send("No cmd_id provided.");
     }
   });
-
-// ✅ New Route to Receive Purchased Quantity
-app.get("/confirm_purchase", (req, res) => {
-  const quantity = req.query.quantity;
-
-  if (quantity) {
-    console.log(`✅ Received Purchased Quantity: ${quantity}`);
-    res.status(200).send(`Purchase confirmed. Quantity: ${quantity}`);
-  } else {
-    console.log("⚠️ No quantity received.");
-    res.status(400).send("No quantity provided.");
-  }
-});
-
   
 
 // ✅ New Route to Handle GET Requests from ESP32
