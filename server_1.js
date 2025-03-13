@@ -53,6 +53,20 @@ app.get("/send_cmd", (req, res) => {
       res.status(400).send("No cmd_id provided.");
     }
   });
+
+// ✅ New Route to Receive Purchased Quantity
+app.get("/confirm_purchase", (req, res) => {
+  const quantity = req.query.quantity;
+
+  if (quantity) {
+    console.log(`✅ Received Purchased Quantity: ${quantity}`);
+    res.status(200).send(`Purchase confirmed. Quantity: ${quantity}`);
+  } else {
+    console.log("⚠️ No quantity received.");
+    res.status(400).send("No quantity provided.");
+  }
+});
+
   
 
 // ✅ New Route to Handle GET Requests from ESP32
@@ -74,6 +88,31 @@ app.get("/send_payment", (req, res) => {
   } else {
     console.log("⚠️ No cmd_id received in query.");
     res.status(400).send("No cmd_id provided.");
+  }
+});
+
+// ✅ Replace with ESP32's fixed local IP
+const ESP32_IP = "http://192.168.43.100";  // This is the static IP you set on ESP32
+
+// ✅ Route to Receive Purchased Quantity from Website
+app.get("/confirm_purchase", async (req, res) => {
+  const quantity = req.query.quantity;
+
+  if (quantity) {
+    console.log(`✅ Received Purchased Quantity: ${quantity}`);
+
+    try {
+      // ✅ Immediately send the quantity to ESP32
+      const espResponse = await axios.get(`${ESP32_IP}/receive_quantity?quantity=${quantity}`);
+      console.log(`✅ Sent to ESP32. ESP32 Response: ${espResponse.data}`);
+    } catch (error) {
+      console.error("⚠️ Error sending quantity to ESP32:", error.message);
+    }
+
+    res.status(200).send(`Purchase confirmed. Quantity: ${quantity}`);
+  } else {
+    console.log("⚠️ No quantity received.");
+    res.status(400).send("No quantity provided.");
   }
 });
 
